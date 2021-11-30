@@ -1,0 +1,21 @@
+- API 
+- Make currency an option?
+- Make coin change an option?
+
+- Remember documentation!
+- Check for edge cases -> testing!
+
+Downtrend(dd/mm/yy, dd/mm/yy) -> streak in days
+
+HighestTradingVolume(dd/mm/yy, dd/mm/yy) -> Date,Volume(in euros)
+
+DaysToBuyAndSell(dd/mm/yy, dd/mm/yy) -> (Bestdaytobuy, bestdaytosell)
+	- if the given range was pure downtrend -> tell user to not buy/sell
+
+CorrectDateCheck(dd/mm/yy, dd/mm/yy)
+	- Should this check for 
+
+//Retrieve the json with 
+RequestCoinData(dd/mm/yy, dd/mm/yy)
+GetCoinDataJson(json) -> (price, market cap, 24h volume)
+
