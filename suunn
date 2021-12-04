@@ -1,6 +1,10 @@
 - API 
 - Make currency an option?
 - Make coin change an option?
+- ehkä uri (base) jotta erilaiset pyynnöt?
+	https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformedoriginalstring?view=net-6.0
+- testaa coingecko serverin status ping kyselyllä=?
+- jos call on ulommaisimmasta (coin, currency, §
 
 - Remember documentation!
 - Check for edge cases -> testing!
@@ -18,4 +22,16 @@ CorrectDateCheck(dd/mm/yy, dd/mm/yy)
 //Retrieve the json with 
 RequestCoinData(dd/mm/yy, dd/mm/yy)
 GetCoinDataJson(json) -> (price, market cap, 24h volume)
+
+REQUEST TO URL
+	- miten saada mahdollisimman helposti muutettavaksi?
+	- ehkä url basen kautta
+	1. https://api.coingecko.com/api/v3/
+	2. coins
+	3. [coin_id]
+	4. market_chart
+	5. range?vs_currency=eur&from=1577836800&to=1609376400
+		- [currency]
+		- [from]
+		- [to]
 
