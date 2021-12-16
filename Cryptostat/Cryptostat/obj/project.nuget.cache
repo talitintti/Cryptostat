@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "mPsFpV6HPofeQNFQaLA1QNwJvMZcN/zrzhMntQ/FWXZehdCgIcdZnPICk6QP8riqZke0Y7qPx/HHlNhIuL2FMQ==",
+  "dgSpecHash": "5I8nJUylrRdExJ+JqEcSd2KSSO//3LFSLtcwQpjnfXrZGlxkN5DuI60caxiHBzlbnv/h+moQnGnWke5t2IE2sA==",
   "success": true,
   "projectFilePath": "/home/momo/Programming/CS/CryptoStat/Cryptostat/Cryptostat/Cryptostat.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/momo/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

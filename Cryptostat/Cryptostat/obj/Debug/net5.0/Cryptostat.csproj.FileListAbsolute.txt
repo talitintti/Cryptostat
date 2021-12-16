@@ -14,3 +14,5 @@
 /home/momo/Programming/CS/CryptoStat/Cryptostat/Cryptostat/obj/Debug/net5.0/ref/Cryptostat.dll
 /home/momo/Programming/CS/CryptoStat/Cryptostat/Cryptostat/obj/Debug/net5.0/Cryptostat.pdb
 /home/momo/Programming/CS/CryptoStat/Cryptostat/Cryptostat/obj/Debug/net5.0/Cryptostat.genruntimeconfig.cache
+/home/momo/Programming/CS/CryptoStat/Cryptostat/Cryptostat/bin/Debug/net5.0/Newtonsoft.Json.dll
+/home/momo/Programming/CS/CryptoStat/Cryptostat/Cryptostat/obj/Debug/net5.0/Cryptostat.csproj.CopyComplete

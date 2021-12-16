@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Cryptostat
 {
@@ -8,27 +11,38 @@ namespace Cryptostat
     {
         static async Task Main(string[] args)
         {
+            Console.WriteLine(await GetLongestDowntrend((2019, 5, 28), (2020, 5, 28)));
         }
-        
-        
-        
-        //public static string GetLongestDowntrend() 
-        
-        private static async Task<(long, long, long)> GetDataGivenRange(string coin, string currency, string fromDate, string toDate) {
+
+        /// <summary>
+        /// Gets the longest downtrend from a specified time range. If can't fulfill request -> return 0
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <returns>Longest downtrend in days</returns>
+        public static async Task<int> GetLongestDowntrend((int year, int month, int day) fromDate,
+            (int year, int month, int day) toDate)
+        {
+            var coinID = "bitcoin";
+            var currencyID = "eur";
             string urlBase = "https://api.coingecko.com/api/v3/";
-            //Check for inputted coin and currency validity here
-            Int64 unixFromDate = DateToUnixTimestamp(fromDate); //does this check for validity sas well??
-            Int64 unixToDate = DateToUnixTimestamp(toDate);
-            string requestRangeUrl = BuildRangeRequestUrl(urlBase, coin, currency, unixFromDate, unixToDate);
-            string a = await HttpRequestAsync(requestRangeUrl);
-            if (a.Equals(""))
+
+            Int64 unixFromDate = DateToUnixTimestamp(fromDate.year, fromDate.month, fromDate.day); //does this check for validity sas well??
+            Int64 unixToDate = DateToUnixTimestamp(toDate.year, fromDate.month, fromDate.day);
+            
+            string requestRangeUrl = BuildRangeRequestUrl(urlBase, coinID, currencyID, unixFromDate, unixToDate);
+            string serverMessage = await HttpRequestAsync(requestRangeUrl);
+            if (serverMessage.Equals(""))
             {
-                return (0,0,0);
-                //Console.WriteLine("invalid url")
+                return (0);
             }
-            Console.WriteLine(a);
+
+            double[][] coinPriceAndDate = DeserializeDateAndPrice(serverMessage).prices;
+            int longestDowntrend = LongestDownStreak(coinPriceAndDate);
+            return longestDowntrend;
         }
-        
+
+
         /// <summary>
         /// Make a http request with provided url and return a Task<string>
         /// that contains the response. In case of bad url, timeout or no
@@ -64,10 +78,9 @@ namespace Cryptostat
         /// <returns></returns>
         private static string BuildRangeRequestUrl(string baseUrl,string coinID, string currency, Int64 fromDate, Int64 toDate)
         {
-            string builtUrl = baseUrl;
-            string rangeReqUrl = "coins/" + coinID + "market_chart range?vs_currency=" +
+            string rangeReqUrl = "coins/" + coinID + "/market_chart/range?vs_currency=" +
                                  currency + "&from=" + fromDate + "&to=" + toDate; 
-            return builtUrl;
+            return baseUrl + rangeReqUrl;
         }
 
         
@@ -90,6 +103,35 @@ namespace Cryptostat
             }
             return timestamp;
         }
+
+        public static CoinPrice DeserializeDateAndPrice(string json)
+       {
+            CoinPrice coinPrice = JsonConvert.DeserializeObject<CoinPrice>(json); //TODO: does this need any sec checks
+            return coinPrice;
+        }
+
+        public static int LongestDownStreak(double[][] priceAndDate) //TODO: TEST FOR EDGE CASES!!!!
+        {
+            int streak = 0;
+            int currentStreak = 0;
+            int numberOfDays = priceAndDate.GetLength(0);
+            if (numberOfDays < 2) return 1;
+            for ( int i = 1; i < numberOfDays; i++)
+            {
+                if (priceAndDate[i][1] < priceAndDate[i - 1][1]) currentStreak++;
+                else if (currentStreak > streak)
+                {
+                    streak = currentStreak;
+                    currentStreak = 0;
+                }
+            }
+            return streak;
+        }
+        
     }
-    
+    public class CoinPrice
+    {
+        public double[][] prices { get; set; }
+
+    }
 }

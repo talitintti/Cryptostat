@@ -5,6 +5,8 @@
 	https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformedoriginalstring?view=net-6.0
 - testaa coingecko serverin status ping kyselyllä=?
 - jos call on ulommaisimmasta (coin, currency, §
+- need not be async??????????????????+
+- huomaa se TUNTIA MYÖHEMMIN JUTTU!!!!! -> LISÄÄ TUNTI JOHONKI KOHTAAN
 
 - Remember documentation!
 - Check for edge cases -> testing!
