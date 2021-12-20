@@ -1,0 +1,17 @@
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/bin/Debug/net6.0/Cryptostat
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/bin/Debug/net6.0/Cryptostat.deps.json
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/bin/Debug/net6.0/Cryptostat.runtimeconfig.json
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/bin/Debug/net6.0/Cryptostat.dll
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/bin/Debug/net6.0/ref/Cryptostat.dll
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/bin/Debug/net6.0/Cryptostat.pdb
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/bin/Debug/net6.0/Newtonsoft.Json.dll
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.csproj.AssemblyReference.cache
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.GeneratedMSBuildEditorConfig.editorconfig
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.AssemblyInfoInputs.cache
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.AssemblyInfo.cs
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.csproj.CoreCompileInputs.cache
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.csproj.CopyComplete
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.dll
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/ref/Cryptostat.dll
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.pdb
+/home/momo/Programming/CS/Cryptostat/Cryptostat/Cryptostat/obj/Debug/net6.0/Cryptostat.genruntimeconfig.cache

@@ -7,8 +7,13 @@
 - jos call on ulommaisimmasta (coin, currency, §
 - need not be async??????????????????+
 - huomaa se TUNTIA MYÖHEMMIN JUTTU!!!!! -> LISÄÄ TUNTI JOHONKI KOHTAAN
+	- muista tästä dokumentoida onko range inclusive
 - check the types, use unsigned when the value cant be -
+-
 PITÄÄ PÄÄTTÄÄ NÄÄ TYYPIT
+-mitä jos range on väärin päin esim (2021.2.1, 1999.1.1)
+-muista käydä läpi kaikki dokumentaatio virheiden varalta lopulisessa versiossa
+
 
 - Remember documentation!
 - Check for edge cases -> testing!
