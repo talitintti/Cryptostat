@@ -7,6 +7,8 @@
 - jos call on ulommaisimmasta (coin, currency, §
 - need not be async??????????????????+
 - huomaa se TUNTIA MYÖHEMMIN JUTTU!!!!! -> LISÄÄ TUNTI JOHONKI KOHTAAN
+- check the types, use unsigned when the value cant be -
+PITÄÄ PÄÄTTÄÄ NÄÄ TYYPIT
 
 - Remember documentation!
 - Check for edge cases -> testing!

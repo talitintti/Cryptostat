@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Cryptostat
@@ -11,7 +9,31 @@ namespace Cryptostat
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine(await GetLongestDowntrend((2019, 5, 28), (2020, 5, 28)));
+            //Console.WriteLine(await GetLongestDowntrend((2018, 1, 1), (2021, 9, 12)));
+            await GetHighestTradingVolume((2005, 4,13),(2021,12,13));
+        }
+
+        public static async Task<(int year, int month, int day, int volume)> GetHighestTradingVolume((int year, int month, int day) fromDate, 
+            (int year, int month, int day) toDate) //TODO: get rid of the async? you might not need it
+        {
+            var coinID = "bitcoin";
+            var currencyID = "eur";
+            string urlBase = "https://api.coingecko.com/api/v3/"; //TODO: these *might* be better off as attributes
+
+            Int64 unixFromDate = DateToUnixTimestamp(fromDate.year, fromDate.month, fromDate.day);
+            Int64 unixToDate = DateToUnixTimestamp(toDate.year, fromDate.month, fromDate.day);
+            
+            string requestRangeUrl = BuildRangeRequestUrl(urlBase, coinID, currencyID, unixFromDate, unixToDate);
+            string serverMessage = await HttpRequestAsync(requestRangeUrl);
+            if (serverMessage.Equals(""))
+            {
+                return (0,0,0,0);
+            }
+
+            double[][] coinVolumeAndDate = DeserializeDateAndPrice(serverMessage, 1);
+            (double date, double volume) = HighestVolume(coinVolumeAndDate);
+            
+            return (1,1,1,1); //TODO:obv fix this
         }
 
         /// <summary>
@@ -37,7 +59,7 @@ namespace Cryptostat
                 return (0);
             }
 
-            double[][] coinPriceAndDate = DeserializeDateAndPrice(serverMessage).prices;
+            double[][] coinPriceAndDate = DeserializeDateAndPrice(serverMessage,0);
             int longestDowntrend = LongestDownStreak(coinPriceAndDate);
             return longestDowntrend;
         }
@@ -104,21 +126,67 @@ namespace Cryptostat
             return timestamp;
         }
 
-        public static CoinPrice DeserializeDateAndPrice(string json)
-       {
-            CoinPrice coinPrice = JsonConvert.DeserializeObject<CoinPrice>(json); //TODO: does this need any sec checks
-            return coinPrice;
+        /// <summary>
+        /// Deserialize the given json into 2-dim array.
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="chooseData">This decides if data fetched is date+price (0) or date+volume (1)</param>
+        /// <returns>Array with requested data</returns>
+        public static double[][] DeserializeDateAndPrice(string json, int chooseData)
+        {
+           double[][] array;
+           switch (chooseData)
+           {
+              default:  
+                array = JsonConvert.DeserializeObject<CoinPrice>(json).prices; //TODO: does this need any sec checks;
+                break;
+              case 1:
+                array = JsonConvert.DeserializeObject<CoinVolume>(json).total_volumes; //TODO: does this need any sec checks;
+                break;
+           }
+            return array;
         }
 
-        public static int LongestDownStreak(double[][] priceAndDate) //TODO: TEST FOR EDGE CASES!!!!
+        /// <summary>
+        /// Returns the values of i and x where x is the highest value of the array {{i,x},...}.
+        /// Array has to be of dimensions [][]
+        /// If there are multiple biggest values of x the first one in order from 0...arraySize is returned.
+        /// (0,0) is returned if cant find the biggest.
+        /// </summary>
+        /// <param name="volumeAndDate"></param>
+        /// <returns>Biggest x and corresponding i</returns>
+        private static (double date, double volume) HighestVolume(double[][] volumeAndDate)
+        {
+            int numberOfDays = volumeAndDate.GetLength(0);
+            if (numberOfDays < 1) return (0,0);
+            int indexOfHighest = 0;
+            
+            for ( int i = 1; i < numberOfDays; i++)
+            {
+                if (volumeAndDate[i][1] > volumeAndDate[indexOfHighest][1])
+                    indexOfHighest = i;
+            }
+
+            return (volumeAndDate[indexOfHighest][0], volumeAndDate[indexOfHighest][1]);
+        }
+
+            public static DateTime ConvertUnixTimeStampToDateTime(double unixtime) 
+            {
+                DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0).ToLocalTime();
+                return sTime.AddSeconds(unixtime); //maybe change to int int int 
+            }
+            
+        public static int LongestDownStreak(double[][] volumeAndDate) //TODO: TEST FOR EDGE CASES!!!!
         {
             int streak = 0;
             int currentStreak = 0;
-            int numberOfDays = priceAndDate.GetLength(0);
+            int numberOfDays = volumeAndDate.GetLength(0);
+            
             if (numberOfDays < 2) return 1;
+            
             for ( int i = 1; i < numberOfDays; i++)
             {
-                if (priceAndDate[i][1] < priceAndDate[i - 1][1]) currentStreak++;
+                if (volumeAndDate[i][1] < volumeAndDate[i - 1][1]) currentStreak++;
                 else if (currentStreak > streak)
                 {
                     streak = currentStreak;
@@ -132,6 +200,9 @@ namespace Cryptostat
     public class CoinPrice
     {
         public double[][] prices { get; set; }
-
+    }
+    public class CoinVolume
+    {
+        public double[][] total_volumes { get; set; }
     }
 }
